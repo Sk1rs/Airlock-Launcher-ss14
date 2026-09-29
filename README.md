@@ -5,7 +5,7 @@
 очередь, вырос из [лаунчера Space Wizards](https://github.com/space-wizards/SS14.Launcher).
 
 > Игру делают [Space Wizards Federation](https://github.com/space-wizards/space-station-14) и сотни
-> участников сообщества. Этот репозиторий — только лаунчер.
+> участников сообщества. Этот репозиторий - только лаунчер.
 
 ## Что умеет сверх обычного лаунчера
 
