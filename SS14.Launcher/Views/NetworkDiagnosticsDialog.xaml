@@ -1,0 +1,59 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:SS14.Launcher.ViewModels"
+        xmlns:loc="clr-namespace:SS14.Launcher.Localization"
+        xmlns:v="clr-namespace:SS14.Launcher.Views"
+        mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="480"
+        MinWidth="640" MinHeight="420"
+        Width="680" Height="520"
+        x:Class="SS14.Launcher.Views.NetworkDiagnosticsDialog"
+        Icon="{DynamicResource WindowIcon}"
+        Title="{loc:Loc netdiag-title}"
+        Padding="4"
+        WindowStartupLocation="CenterOwner">
+  <Design.DataContext>
+    <vm:NetworkDiagnosticsViewModel />
+  </Design.DataContext>
+  <Window.DataContext>
+    <vm:NetworkDiagnosticsViewModel />
+  </Window.DataContext>
+
+  <v:ScaledControl>
+    <DockPanel>
+      <DockPanel Height="30" Margin="0 4 0 0" DockPanel.Dock="Bottom" LastChildFill="False">
+        <Button DockPanel.Dock="Right" Click="CloseDialog" Classes="OpenLeft"
+                Content="{loc:Loc netdiag-close}" />
+        <Button DockPanel.Dock="Right" Click="RunAgain" Classes="OpenRight"
+                Content="{loc:Loc netdiag-run}"
+                IsEnabled="{Binding !Busy}" />
+      </DockPanel>
+
+      <TextBlock DockPanel.Dock="Bottom" Margin="4" TextWrapping="Wrap" Text="{Binding Summary}" />
+
+      <TextBlock DockPanel.Dock="Top" Margin="4" TextWrapping="Wrap"
+                 Foreground="{DynamicResource ThemeSubTextBrush}"
+                 Text="{loc:Loc netdiag-intro}" />
+
+      <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+        <ItemsControl ItemsSource="{Binding Rows}" Margin="4">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <Grid ColumnDefinitions="120,*,110,170" Margin="0 2">
+                <TextBlock Grid.Column="0" Text="{Binding Group}" VerticalAlignment="Center"
+                           Foreground="{DynamicResource ThemeSubTextBrush}" />
+                <TextBlock Grid.Column="1" Text="{Binding Host}" VerticalAlignment="Center"
+                           TextTrimming="CharacterEllipsis" ToolTip.Tip="{Binding Check.Url}" />
+                <TextBlock Grid.Column="2" Text="{Binding Status}" VerticalAlignment="Center" FontWeight="Bold" />
+                <TextBlock Grid.Column="3" Text="{Binding Detail}" VerticalAlignment="Center"
+                           TextTrimming="CharacterEllipsis" ToolTip.Tip="{Binding Detail}"
+                           Foreground="{DynamicResource ThemeSubTextBrush}" />
+              </Grid>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </ScrollViewer>
+    </DockPanel>
+  </v:ScaledControl>
+</Window>

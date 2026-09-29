@@ -1,0 +1,59 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mainWindowTabs="clr-namespace:SS14.Launcher.ViewModels.MainWindowTabs"
+             xmlns:loc="clr-namespace:SS14.Launcher.Localization"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="SS14.Launcher.Views.MainWindowTabs.CurrencyTabView">
+  <Design.DataContext>
+    <mainWindowTabs:CurrencyTabViewModel />
+  </Design.DataContext>
+
+  <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+    <StackPanel Orientation="Vertical" Margin="8">
+
+      <!-- Converter -->
+      <TextBlock Text="{loc:Loc currency-converter-title}" Classes="NanoHeadingMedium" Margin="0 0 0 4" />
+
+      <StackPanel Orientation="Horizontal" Margin="4">
+        <TextBox Text="{Binding Amount, Mode=TwoWay}" MinWidth="120" VerticalAlignment="Center" />
+        <ComboBox ItemsSource="{Binding Currencies}" SelectedItem="{Binding FromCurrency, Mode=TwoWay}"
+                  MinWidth="90" Margin="8 0 0 0" VerticalAlignment="Center" />
+        <Button Content="{loc:Loc currency-swap}" Command="{Binding SwapPressed}"
+                Margin="8 0 0 0" VerticalAlignment="Center" />
+        <ComboBox ItemsSource="{Binding Currencies}" SelectedItem="{Binding ToCurrency, Mode=TwoWay}"
+                  MinWidth="90" Margin="8 0 0 0" VerticalAlignment="Center" />
+      </StackPanel>
+
+      <TextBlock Text="{Binding Result}" Classes="NanoHeadingMedium" Margin="4 8 4 4" TextWrapping="Wrap" />
+
+      <Panel Classes="ScrollViewerSep" Margin="0 8" />
+
+      <!-- Rate table -->
+      <TextBlock Text="{loc:Loc currency-rates-title}" Classes="NanoHeadingMedium" Margin="0 0 0 4" />
+
+      <ItemsControl ItemsSource="{Binding Rows}" Margin="4">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <DockPanel Margin="0 2">
+              <TextBlock DockPanel.Dock="Left" Text="{Binding Unit}" MinWidth="70"
+                         Foreground="{DynamicResource ThemeNanoGoldBrush}" />
+              <TextBlock Text="{Binding Values}" TextWrapping="Wrap" />
+            </DockPanel>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+
+      <StackPanel Orientation="Horizontal" Margin="4 8 4 0">
+        <Button Content="{loc:Loc currency-refresh}" Command="{Binding RefreshPressed}"
+                IsEnabled="{Binding CanRefresh}" />
+        <TextBlock Text="{Binding UpdatedText}" VerticalAlignment="Center" Margin="8 0 0 0"
+                   Foreground="{DynamicResource ThemeSubTextBrush}" />
+      </StackPanel>
+
+      <TextBlock Text="{loc:Loc currency-source}" Margin="4 8 4 0" TextWrapping="Wrap"
+                 Foreground="{DynamicResource ThemeSubTextBrush}" />
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

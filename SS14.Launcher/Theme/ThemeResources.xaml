@@ -1,0 +1,11 @@
+<!--
+  Non-colour theme resources. All colours and brushes live in Theme/Palettes/*.xaml so they can be
+  swapped at runtime; see ThemeManager.
+-->
+<Style xmlns="https://github.com/avaloniaui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+       xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <Style.Resources>
+    <sys:Double x:Key="FontSizeNormal">15</sys:Double>
+  </Style.Resources>
+</Style>

@@ -1,0 +1,70 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:SS14.Launcher.ViewModels"
+        xmlns:loc="clr-namespace:SS14.Launcher.Localization"
+        xmlns:v="clr-namespace:SS14.Launcher.Views"
+        mc:Ignorable="d" d:DesignWidth="760" d:DesignHeight="520"
+        MinWidth="640" MinHeight="420"
+        Width="780" Height="560"
+        x:Class="SS14.Launcher.Views.CharacterGalleryDialog"
+        x:DataType="vm:CharacterGalleryViewModel"
+        Icon="{DynamicResource WindowIcon}"
+        Title="{loc:Loc gallery-title}"
+        Padding="4"
+        WindowStartupLocation="CenterOwner">
+
+  <v:ScaledControl>
+    <DockPanel>
+      <DockPanel Height="30" Margin="0 4 0 0" DockPanel.Dock="Bottom" LastChildFill="False">
+        <Button DockPanel.Dock="Right" Click="CloseDialog" Classes="OpenLeft"
+                Content="{loc:Loc gallery-close}" />
+        <Button DockPanel.Dock="Right" Click="OpenFolder" Classes="OpenRight"
+                Content="{loc:Loc gallery-open-folder}" />
+      </DockPanel>
+
+      <TextBlock DockPanel.Dock="Bottom" Margin="4" TextWrapping="Wrap"
+                 Foreground="{DynamicResource ThemeSubTextBrush}"
+                 Text="{Binding StatusText}" />
+
+      <TextBlock DockPanel.Dock="Top" Margin="4" TextWrapping="Wrap"
+                 Foreground="{DynamicResource ThemeSubTextBrush}"
+                 Text="{loc:Loc gallery-intro}" />
+
+      <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+        <ItemsControl ItemsSource="{Binding Entries}" Margin="4">
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+              <WrapPanel Orientation="Horizontal" />
+            </ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+          <ItemsControl.ItemTemplate>
+            <DataTemplate x:DataType="vm:GalleryEntryViewModel">
+              <Border Width="150" Margin="4" Padding="6"
+                      Background="{DynamicResource ThemeListBackgroundBrush}"
+                      BorderBrush="{DynamicResource ThemeBorderMidBrush}" BorderThickness="1">
+                <StackPanel Orientation="Vertical" Spacing="4">
+                  <Border Height="112" Background="{DynamicResource ThemeBackgroundBrush}">
+                    <Image Source="{Binding Thumbnail}" Stretch="Uniform"
+                           RenderOptions.BitmapInterpolationMode="None" />
+                  </Border>
+                  <TextBlock Text="{Binding Name}" FontWeight="Bold"
+                             TextTrimming="CharacterEllipsis" ToolTip.Tip="{Binding Name}" />
+                  <TextBlock Text="{Binding Details}" FontSize="11"
+                             Foreground="{DynamicResource ThemeSubTextBrush}"
+                             TextTrimming="CharacterEllipsis" ToolTip.Tip="{Binding Details}" />
+                  <TextBlock Text="{Binding Source}" FontSize="11"
+                             Foreground="{DynamicResource ThemeSubTextBrush}"
+                             TextTrimming="CharacterEllipsis" ToolTip.Tip="{Binding Entry.Path}" />
+                  <Button Content="{loc:Loc gallery-load}" HorizontalAlignment="Stretch"
+                          HorizontalContentAlignment="Center" Command="{Binding Load}" Click="Loaded" />
+                </StackPanel>
+              </Border>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </ScrollViewer>
+    </DockPanel>
+  </v:ScaledControl>
+</Window>

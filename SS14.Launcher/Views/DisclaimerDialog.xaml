@@ -1,0 +1,39 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:loc="clr-namespace:SS14.Launcher.Localization"
+        xmlns:v="clr-namespace:SS14.Launcher.Views"
+        x:Class="SS14.Launcher.Views.DisclaimerDialog"
+        Width="540" Height="380"
+        CanResize="False"
+        Icon="{DynamicResource WindowIcon}"
+        Title="{loc:Loc disclaimer-title}"
+        Padding="4"
+        WindowStartupLocation="CenterOwner">
+  <v:ScaledControl>
+    <DockPanel Margin="8">
+      <DockPanel DockPanel.Dock="Bottom" Margin="0 8 0 0" LastChildFill="False">
+        <Button DockPanel.Dock="Right" Name="CloseButton" Classes="OpenLeft" IsEnabled="False"
+                Content="{loc:Loc disclaimer-close}" Click="ClosePressed" />
+        <TextBlock DockPanel.Dock="Right" Name="Countdown" VerticalAlignment="Center" Margin="0 0 8 0"
+                   Foreground="{DynamicResource ThemeSubTextBrush}" />
+      </DockPanel>
+
+      <StackPanel Orientation="Vertical" Spacing="6">
+        <TextBlock Text="{loc:Loc disclaimer-heading}" Classes="NanoHeadingMedium" />
+        <TextBlock Text="{loc:Loc disclaimer-text}" TextWrapping="Wrap" Margin="0 0 0 6" />
+
+        <TextBlock Text="{loc:Loc disclaimer-upstream}" Foreground="{DynamicResource ThemeSubTextBrush}" />
+        <Button Classes="OpenBoth" HorizontalAlignment="Left" Click="OpenUpstream"
+                Content="github.com/space-wizards/space-station-14" />
+
+        <TextBlock Text="{loc:Loc disclaimer-fork}" Foreground="{DynamicResource ThemeSubTextBrush}" />
+        <Button Classes="OpenBoth" HorizontalAlignment="Left" Click="OpenFork"
+                Content="github.com/Sk1rs" />
+
+        <TextBlock Text="{loc:Loc disclaimer-base}" Foreground="{DynamicResource ThemeSubTextBrush}" />
+        <Button Classes="OpenBoth" HorizontalAlignment="Left" Click="OpenBase"
+                Content="github.com/Simple-Station/SimpleStationLauncher" />
+      </StackPanel>
+    </DockPanel>
+  </v:ScaledControl>
+</Window>

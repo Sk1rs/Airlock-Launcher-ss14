@@ -1,0 +1,160 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mainWindowTabs="clr-namespace:SS14.Launcher.ViewModels.MainWindowTabs"
+             xmlns:loc="clr-namespace:SS14.Launcher.Localization"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="SS14.Launcher.Views.MainWindowTabs.CharacterTabView">
+  <Design.DataContext>
+    <mainWindowTabs:CharacterTabViewModel />
+  </Design.DataContext>
+
+  <DockPanel>
+    <!-- Top bar: what we are building -->
+    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="8 8 8 4">
+      <TextBlock Text="{loc:Loc character-fork}" VerticalAlignment="Center" Margin="0 0 4 0" />
+      <ComboBox MinWidth="150" ItemsSource="{Binding Forks}" SelectedItem="{Binding SelectedFork, Mode=TwoWay}">
+        <ComboBox.ItemTemplate>
+          <DataTemplate>
+            <TextBlock Text="{Binding Name}" />
+          </DataTemplate>
+        </ComboBox.ItemTemplate>
+      </ComboBox>
+
+      <TextBlock Text="{loc:Loc character-species}" VerticalAlignment="Center" Margin="12 0 4 0" />
+      <ComboBox MinWidth="130" ItemsSource="{Binding Species}" SelectedItem="{Binding SelectedSpecies, Mode=TwoWay}">
+        <ComboBox.ItemTemplate>
+          <DataTemplate>
+            <TextBlock Text="{Binding Name}" />
+          </DataTemplate>
+        </ComboBox.ItemTemplate>
+      </ComboBox>
+
+      <CheckBox Content="{loc:Loc character-female}" IsChecked="{Binding Female}" Margin="12 0 0 0" />
+
+      <TextBlock Text="{loc:Loc character-job}" VerticalAlignment="Center" Margin="12 0 4 0"
+                 IsVisible="{Binding JobsAvailable}" />
+      <ComboBox MinWidth="160" ItemsSource="{Binding Jobs}" SelectedItem="{Binding SelectedJob, Mode=TwoWay}"
+                IsVisible="{Binding JobsAvailable}">
+        <ComboBox.ItemTemplate>
+          <DataTemplate>
+            <TextBlock Text="{Binding Name}" />
+          </DataTemplate>
+        </ComboBox.ItemTemplate>
+      </ComboBox>
+
+      <TextBlock Text="{loc:Loc character-direction}" VerticalAlignment="Center" Margin="12 0 4 0" />
+      <ComboBox MinWidth="90" ItemsSource="{Binding Directions}" SelectedItem="{Binding SelectedDirection, Mode=TwoWay}">
+        <ComboBox.ItemTemplate>
+          <DataTemplate>
+            <TextBlock Text="{Binding Name}" />
+          </DataTemplate>
+        </ComboBox.ItemTemplate>
+      </ComboBox>
+    </StackPanel>
+
+    <Panel DockPanel.Dock="Top" Classes="ScrollViewerSep" />
+
+    <!-- Bottom bar: actions and status -->
+    <DockPanel DockPanel.Dock="Bottom" Margin="8 4" LastChildFill="True">
+      <Button DockPanel.Dock="Left" Classes="OpenRight"
+              Content="{loc:Loc character-export}" Click="ExportPressed" />
+      <Button DockPanel.Dock="Left" Classes="OpenBoth"
+              Content="{loc:Loc character-profile-export}"
+              ToolTip.Tip="{loc:Loc character-profile-export-desc}"
+              Command="{Binding SaveProfile}" />
+      <Button DockPanel.Dock="Left" Classes="OpenBoth"
+              Content="{loc:Loc character-profile-import}"
+              ToolTip.Tip="{loc:Loc character-profile-import-desc}"
+              Click="ImportProfilePressed" />
+      <Button DockPanel.Dock="Left" Classes="OpenBoth"
+              Content="{loc:Loc character-gallery}"
+              ToolTip.Tip="{loc:Loc character-gallery-desc}"
+              Click="GalleryPressed" />
+      <Button DockPanel.Dock="Left" Classes="OpenBoth"
+              Content="{loc:Loc character-randomize}"
+              ToolTip.Tip="{loc:Loc character-randomize-desc}"
+              Command="{Binding Randomize}" />
+      <Button DockPanel.Dock="Left" Classes="OpenBoth"
+              Content="{loc:Loc character-copy}"
+              ToolTip.Tip="{loc:Loc character-copy-desc}"
+              Click="CopyPressed" />
+      <Button DockPanel.Dock="Left" Classes="OpenLeft"
+              Content="{loc:Loc character-refresh}" Command="{Binding RefreshPressed}" />
+      <CheckBox DockPanel.Dock="Left" Margin="12 0 0 0" VerticalAlignment="Center"
+                Content="{loc:Loc character-fast-download}"
+                ToolTip.Tip="{loc:Loc character-fast-download-desc}"
+                IsChecked="{Binding FastDownload}" />
+      <TextBlock Margin="8 0 0 0" VerticalAlignment="Center" TextWrapping="Wrap"
+                 Foreground="{DynamicResource ThemeSubTextBrush}"
+                 Text="{Binding StatusText}" />
+    </DockPanel>
+
+    <Grid ColumnDefinitions="Auto,*">
+      <!-- Preview -->
+      <StackPanel Grid.Column="0" Margin="8" Orientation="Vertical" Width="280">
+        <Border Background="{DynamicResource ThemeListBackgroundBrush}"
+                BorderBrush="{DynamicResource ThemeBorderMidBrush}" BorderThickness="1"
+                Height="280" Width="264">
+          <Image Source="{Binding Preview}"
+                 RenderOptions.BitmapInterpolationMode="None"
+                 Stretch="Uniform" />
+        </Border>
+
+        <!-- Skin: a tone slider for species the game tones, a colour for the rest -->
+        <StackPanel Orientation="Vertical" Margin="0 8 0 0" IsVisible="{Binding UsesSkinTone}">
+          <TextBlock Text="{loc:Loc character-skin-tone}" />
+          <Slider Minimum="0" Maximum="100" Value="{Binding SkinTone, Mode=TwoWay}" />
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Margin="0 8 0 0" IsVisible="{Binding NotUsesSkinTone}">
+          <TextBlock Text="{loc:Loc character-skin-color}" VerticalAlignment="Center" Margin="0 0 4 0" />
+          <TextBox Text="{Binding SkinColorHex, Mode=TwoWay}" MinWidth="90" />
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Margin="0 8 0 0">
+          <TextBlock Text="{loc:Loc character-eye-color}" VerticalAlignment="Center" Margin="0 0 4 0" />
+          <TextBox Text="{Binding EyeColorHex, Mode=TwoWay}" MinWidth="90" />
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Margin="0 8 0 0">
+          <TextBlock Text="{loc:Loc character-name}" VerticalAlignment="Center" Margin="0 0 4 0" />
+          <TextBox Text="{Binding CharacterName, Mode=TwoWay}" MinWidth="150" />
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Margin="0 8 0 0">
+          <TextBlock Text="{loc:Loc character-age}" VerticalAlignment="Center" Margin="0 0 4 0" />
+          <TextBox Text="{Binding Age, Mode=TwoWay}" MinWidth="60" />
+        </StackPanel>
+      </StackPanel>
+
+      <!-- Markings -->
+      <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Disabled" Margin="0 8 8 8">
+        <ItemsControl ItemsSource="{Binding Layers}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <Grid Margin="0 0 0 4" ColumnDefinitions="110,*,90">
+                <TextBlock Grid.Column="0" Text="{Binding DisplayName}" VerticalAlignment="Center"
+                           TextTrimming="CharacterEllipsis" ToolTip.Tip="{Binding BodyPart}" />
+                <ComboBox Grid.Column="1" HorizontalAlignment="Stretch"
+                          ItemsSource="{Binding Options}"
+                          SelectedItem="{Binding SelectedMarking, Mode=TwoWay}"
+                          DropDownClosed="MarkingDropDownClosed">
+                  <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                      <!-- Hovering an option shows it on the character without picking it. -->
+                      <TextBlock Text="{Binding Name}" Background="Transparent"
+                                 PointerEntered="MarkingHovered" />
+                    </DataTemplate>
+                  </ComboBox.ItemTemplate>
+                </ComboBox>
+                <TextBox Grid.Column="2" Text="{Binding ColorHex, Mode=TwoWay}" Margin="4 0 0 0" />
+              </Grid>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </ScrollViewer>
+    </Grid>
+  </DockPanel>
+</UserControl>

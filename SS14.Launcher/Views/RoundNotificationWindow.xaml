@@ -1,0 +1,25 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:loc="clr-namespace:SS14.Launcher.Localization"
+        x:Class="SS14.Launcher.Views.RoundNotificationWindow"
+        Width="360" Height="120"
+        CanResize="False"
+        SystemDecorations="None"
+        Topmost="True"
+        ShowInTaskbar="False"
+        ShowActivated="False"
+        Title="{loc:Loc watch-notification-title}">
+  <Border Background="{DynamicResource ThemeBackgroundBrush}"
+          BorderBrush="{DynamicResource ThemeBorderMidBrush}" BorderThickness="2" Padding="12">
+    <DockPanel>
+      <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="6" Margin="0 8 0 0">
+        <Button Classes="OpenRight" Content="{loc:Loc watch-notification-connect}" Click="ConnectPressed" />
+        <Button Classes="OpenLeft" Content="{loc:Loc watch-notification-dismiss}" Click="DismissPressed" />
+      </StackPanel>
+      <StackPanel Orientation="Vertical" Spacing="4">
+        <TextBlock Name="Headline" FontWeight="Bold" TextTrimming="CharacterEllipsis" />
+        <TextBlock Name="Body" TextWrapping="Wrap" Foreground="{DynamicResource ThemeSubTextBrush}" />
+      </StackPanel>
+    </DockPanel>
+  </Border>
+</Window>

@@ -1,0 +1,70 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:SS14.Launcher.ViewModels"
+        xmlns:loc="clr-namespace:SS14.Launcher.Localization"
+        xmlns:v="clr-namespace:SS14.Launcher.Views"
+        mc:Ignorable="d" d:DesignWidth="820" d:DesignHeight="560"
+        MinWidth="680" MinHeight="460"
+        Width="860" Height="600"
+        x:Class="SS14.Launcher.Views.ScreenshotGalleryDialog"
+        x:DataType="vm:ScreenshotGalleryViewModel"
+        Icon="{DynamicResource WindowIcon}"
+        Title="{loc:Loc screenshots-title}"
+        Padding="4"
+        WindowStartupLocation="CenterOwner">
+  <Design.DataContext>
+    <vm:ScreenshotGalleryViewModel />
+  </Design.DataContext>
+  <Window.DataContext>
+    <vm:ScreenshotGalleryViewModel />
+  </Window.DataContext>
+
+  <v:ScaledControl>
+    <DockPanel>
+      <DockPanel Height="30" Margin="0 4 0 0" DockPanel.Dock="Bottom" LastChildFill="False">
+        <Button DockPanel.Dock="Right" Click="CloseDialog" Classes="OpenLeft"
+                Content="{loc:Loc screenshots-close}" />
+        <Button DockPanel.Dock="Right" Classes="OpenRight"
+                Content="{loc:Loc screenshots-open-folder}"
+                Command="{Binding OpenFolder}" />
+        <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" Margin="4 0"
+                   Foreground="{DynamicResource ThemeSubTextBrush}"
+                   Text="{Binding StatusText}" TextTrimming="CharacterEllipsis" />
+      </DockPanel>
+
+      <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+        <ItemsControl ItemsSource="{Binding Screenshots}" Margin="4">
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+              <WrapPanel Orientation="Horizontal" />
+            </ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+          <ItemsControl.ItemTemplate>
+            <DataTemplate x:DataType="vm:ScreenshotViewModel">
+              <Border Width="256" Margin="4" Padding="6"
+                      Background="{DynamicResource ThemeListBackgroundBrush}"
+                      BorderBrush="{DynamicResource ThemeBorderMidBrush}" BorderThickness="1">
+                <StackPanel Orientation="Vertical" Spacing="4">
+                  <Border Height="144" Background="{DynamicResource ThemeBackgroundBrush}">
+                    <Image Source="{Binding Thumbnail}" Stretch="Uniform" />
+                  </Border>
+                  <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="11"
+                             TextTrimming="CharacterEllipsis" ToolTip.Tip="{Binding Path}" />
+                  <TextBlock Text="{Binding Details}" FontSize="11"
+                             Foreground="{DynamicResource ThemeSubTextBrush}" />
+                  <StackPanel Orientation="Horizontal" Spacing="4">
+                    <Button Content="{loc:Loc screenshots-open}" Command="{Binding Open}" />
+                    <Button Content="{loc:Loc screenshots-copy}" Click="CopyPressed" />
+                    <Button Content="{loc:Loc screenshots-delete}" Click="DeletePressed" />
+                  </StackPanel>
+                </StackPanel>
+              </Border>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </ScrollViewer>
+    </DockPanel>
+  </v:ScaledControl>
+</Window>

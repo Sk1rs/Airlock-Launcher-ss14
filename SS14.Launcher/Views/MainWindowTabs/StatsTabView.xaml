@@ -1,0 +1,75 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mainWindowTabs="clr-namespace:SS14.Launcher.ViewModels.MainWindowTabs"
+             xmlns:loc="clr-namespace:SS14.Launcher.Localization"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="SS14.Launcher.Views.MainWindowTabs.StatsTabView">
+  <Design.DataContext>
+    <mainWindowTabs:StatsTabViewModel />
+  </Design.DataContext>
+
+  <DockPanel>
+    <!-- Summary -->
+    <TextBlock DockPanel.Dock="Top" Margin="8 8 8 4" TextWrapping="Wrap"
+               Classes="NanoHeadingSmall" Text="{Binding SummaryText}" />
+
+    <Panel DockPanel.Dock="Top" Classes="ScrollViewerSep" />
+
+    <!-- Footer -->
+    <DockPanel DockPanel.Dock="Bottom" Margin="8 4" LastChildFill="False">
+      <Button DockPanel.Dock="Left" Content="{loc:Loc stats-clear}"
+              Command="{Binding ClearPressed}"
+              IsVisible="{Binding !ConfirmingClear}" />
+      <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" Margin="0 0 8 0"
+                 Text="{loc:Loc stats-clear-confirm}"
+                 IsVisible="{Binding ConfirmingClear}" />
+      <Button DockPanel.Dock="Left" Classes="OpenRight"
+              Content="{loc:Loc stats-clear-yes}"
+              Command="{Binding ConfirmClearPressed}"
+              IsVisible="{Binding ConfirmingClear}" />
+      <Button DockPanel.Dock="Left" Classes="OpenLeft"
+              Content="{loc:Loc stats-clear-no}"
+              Command="{Binding CancelClearPressed}"
+              IsVisible="{Binding ConfirmingClear}" />
+    </DockPanel>
+
+    <TextBlock DockPanel.Dock="Bottom" Margin="8 4" TextWrapping="Wrap"
+               Foreground="{DynamicResource ThemeSubTextBrush}"
+               Text="{loc:Loc stats-note}" />
+
+    <!-- Empty state -->
+    <TextBlock DockPanel.Dock="Top" Margin="8 16" TextWrapping="Wrap"
+               HorizontalAlignment="Center"
+               Text="{loc:Loc stats-empty}"
+               IsVisible="{Binding IsEmpty}" />
+
+    <!-- Table -->
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+      <ItemsControl ItemsSource="{Binding Servers}" Margin="8 4" Grid.IsSharedSizeScope="True">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <Grid Margin="0 3">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition SharedSizeGroup="TimeCol" MinWidth="90" Width="Auto" />
+                <ColumnDefinition SharedSizeGroup="SessionCol" MinWidth="80" Width="Auto" />
+                <ColumnDefinition SharedSizeGroup="LastCol" MinWidth="120" Width="Auto" />
+              </Grid.ColumnDefinitions>
+
+              <TextBlock Grid.Column="0" Text="{Binding Name}" TextTrimming="CharacterEllipsis"
+                         ToolTip.Tip="{Binding Address}" VerticalAlignment="Center" />
+              <TextBlock Grid.Column="1" Text="{Binding TotalText}" VerticalAlignment="Center"
+                         Foreground="{DynamicResource ThemeNanoGoldBrush}" />
+              <TextBlock Grid.Column="2" Text="{Binding SessionsText}" VerticalAlignment="Center"
+                         Foreground="{DynamicResource ThemeSubTextBrush}" />
+              <TextBlock Grid.Column="3" Text="{Binding LastPlayedText}" VerticalAlignment="Center"
+                         Foreground="{DynamicResource ThemeSubTextBrush}" />
+            </Grid>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </ScrollViewer>
+  </DockPanel>
+</UserControl>

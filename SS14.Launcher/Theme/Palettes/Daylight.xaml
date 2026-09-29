@@ -1,0 +1,68 @@
+<!--
+  Colour palette for the launcher UI.
+  Every palette defines the same set of keys; swap between them in Options, the launcher applies
+  the change live by replacing this style in Application.Styles (see ThemeManager).
+  Add a new theme by copying this file and registering it in ThemeManager.Themes.
+-->
+<Style xmlns="https://github.com/avaloniaui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Style.Resources>
+    <Color x:Key="ThemeBackgroundColor">#EDEFF2</Color>
+    <Color x:Key="ThemePopupBackgroundColor">#FFFFFF</Color>
+    <Color x:Key="ThemeForegroundColor">#1B1F24</Color>
+    <Color x:Key="ThemeForegroundMutedColor">#8A929C</Color>
+    <Color x:Key="ThemeControlMidColor">#C9CFD7</Color>
+    <Color x:Key="ThemeControlHighColor">#9FB4CC</Color>
+    <Color x:Key="ThemeNanoGoldColor">#1F6FB2</Color>
+    <Color x:Key="ThemeSubTextColor">#5A636D</Color>
+    <Color x:Key="ThemeStripebackEdgeColor">#C2C9D2</Color>
+    <Color x:Key="ThemeButtonHoveredColor">#7FA0C4</Color>
+    <Color x:Key="ThemeTabItemSelectedColor">#CC9FB4CC</Color>
+    <Color x:Key="ThemeTabItemHoveredColor">#CC7FA0C4</Color>
+    <Color x:Key="ThemeListSeparatorColor">#AA7FA0C4</Color>
+    <Color x:Key="ThemeListSeparatorTransparentColor">#007FA0C4</Color>
+    <Color x:Key="ThemeHeaderColor">#E2E6EB</Color>
+    <Color x:Key="ThemeListBackgroundColor">#F7F8FA</Color>
+    <Color x:Key="ThemeListRowAltColor">#ECEFF3</Color>
+    <Color x:Key="ThemeSeparatorColor">#D6DBE1</Color>
+    <Color x:Key="ThemeTagBackgroundColor">#DDE3EA</Color>
+    <Color x:Key="ThemeTagBorderColor">#7FA0C4</Color>
+
+    <SolidColorBrush x:Key="ThemeBackgroundBrush" Color="{StaticResource ThemeBackgroundColor}" />
+    <SolidColorBrush x:Key="ThemePopupBackgroundBrush" Color="{StaticResource ThemePopupBackgroundColor}" />
+    <SolidColorBrush x:Key="ThemeForegroundBrush" Color="{StaticResource ThemeForegroundColor}" />
+    <SolidColorBrush x:Key="ThemeForegroundMutedBrush" Color="{StaticResource ThemeForegroundMutedColor}" />
+    <SolidColorBrush x:Key="ThemeControlMidBrush" Color="{StaticResource ThemeControlMidColor}" />
+    <SolidColorBrush x:Key="ThemeControlHighBrush" Color="{StaticResource ThemeControlHighColor}" />
+    <SolidColorBrush x:Key="ThemeNanoGoldBrush" Color="{StaticResource ThemeNanoGoldColor}" />
+    <SolidColorBrush x:Key="ThemeSubTextBrush" Color="{StaticResource ThemeSubTextColor}" />
+    <SolidColorBrush x:Key="ThemeButtonHoveredBrush" Color="{StaticResource ThemeButtonHoveredColor}" />
+    <SolidColorBrush x:Key="ThemeStripebackEdgeBrush" Color="{StaticResource ThemeStripebackEdgeColor}" />
+    <SolidColorBrush x:Key="ThemeTabItemSelectedBrush" Color="{StaticResource ThemeTabItemSelectedColor}" />
+    <SolidColorBrush x:Key="ThemeTabItemHoveredBrush" Color="{StaticResource ThemeTabItemHoveredColor}" />
+    <SolidColorBrush x:Key="ThemeHeaderBrush" Color="{StaticResource ThemeHeaderColor}" />
+    <SolidColorBrush x:Key="ThemeListBackgroundBrush" Color="{StaticResource ThemeListBackgroundColor}" />
+    <SolidColorBrush x:Key="ThemeListRowAltBrush" Color="{StaticResource ThemeListRowAltColor}" />
+    <SolidColorBrush x:Key="ThemeSeparatorBrush" Color="{StaticResource ThemeSeparatorColor}" />
+    <SolidColorBrush x:Key="ThemeTagBackgroundBrush" Color="{StaticResource ThemeTagBackgroundColor}" />
+    <SolidColorBrush x:Key="ThemeTagBorderBrush" Color="{StaticResource ThemeTagBorderColor}" />
+
+    <VisualBrush x:Key="ThemeStripeBackBrush">
+      <VisualBrush.Visual>
+        <Panel Height="32" Width="32" Background="#F7F8FA">
+          <Path Data="M 0 8 L 24 32 L 8 32 L 0 24 Z" Fill="#ECEFF3" />
+          <Path Data="M 8 0 L 24 0 L 32 8 L 32 24 Z" Fill="#ECEFF3" />
+        </Panel>
+      </VisualBrush.Visual>
+
+      <TileBrush.TileMode>Tile</TileBrush.TileMode>
+      <TileBrush.Stretch>Fill</TileBrush.Stretch>
+
+      <!-- Need to specify these to make tiling work. -->
+      <TileBrush.SourceRect>0, 0, 32, 32</TileBrush.SourceRect>
+      <TileBrush.DestinationRect>0, 0, 32, 32</TileBrush.DestinationRect>
+    </VisualBrush>
+
+    <SolidColorBrush x:Key="WindowOverlayBrush" Color="#55000000" />
+  </Style.Resources>
+</Style>

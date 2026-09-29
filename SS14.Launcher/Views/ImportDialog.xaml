@@ -1,0 +1,87 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:SS14.Launcher.ViewModels"
+        xmlns:loc="clr-namespace:SS14.Launcher.Localization"
+        xmlns:v="clr-namespace:SS14.Launcher.Views"
+        mc:Ignorable="d" d:DesignWidth="620" d:DesignHeight="520"
+        MinWidth="620" MinHeight="520"
+        Width="620" Height="560"
+        x:Class="SS14.Launcher.Views.ImportDialog"
+        Icon="{DynamicResource WindowIcon}"
+        Title="{loc:Loc import-title}"
+        Padding="4"
+        WindowStartupLocation="CenterOwner">
+  <Design.DataContext>
+    <vm:ImportViewModel />
+  </Design.DataContext>
+  <Window.DataContext>
+    <vm:ImportViewModel />
+  </Window.DataContext>
+
+  <v:ScaledControl>
+    <DockPanel>
+      <!-- Buttons -->
+      <DockPanel Height="30" Margin="0 4 0 0" DockPanel.Dock="Bottom" LastChildFill="False">
+        <Button DockPanel.Dock="Right" Click="CloseDialog" Classes="OpenLeft"
+                Content="{loc:Loc import-close}" />
+        <Button DockPanel.Dock="Right" Name="ImportButton" Click="RunImport" Classes="OpenRight"
+                Content="{loc:Loc import-run}"
+                IsEnabled="{Binding !Busy}" />
+      </DockPanel>
+
+      <!-- Result / progress -->
+      <TextBlock DockPanel.Dock="Bottom" Margin="4" TextWrapping="Wrap"
+                 Text="{Binding StatusText}" />
+
+      <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Orientation="Vertical" Margin="4">
+
+          <!-- Tutorial -->
+          <TextBlock Text="{loc:Loc import-intro}" TextWrapping="Wrap" Margin="0 0 0 8" />
+          <TextBlock Text="{loc:Loc import-note-stats}" TextWrapping="Wrap" Margin="0 0 0 4"
+                     Foreground="{DynamicResource ThemeSubTextBrush}" />
+          <TextBlock Text="{loc:Loc import-note-accounts}" TextWrapping="Wrap" Margin="0 0 0 4"
+                     Foreground="{DynamicResource ThemeSubTextBrush}" />
+          <TextBlock Text="{loc:Loc import-note-restart}" TextWrapping="Wrap" Margin="0 0 0 8"
+                     Foreground="{DynamicResource ThemeSubTextBrush}" />
+
+          <Panel Classes="ScrollViewerSep" Margin="0 4" />
+
+          <!-- Nothing found -->
+          <TextBlock Text="{loc:Loc import-none}" TextWrapping="Wrap" Margin="0 8"
+                     IsVisible="{Binding NothingFound}" />
+
+          <!-- Detected installs -->
+          <TextBlock Text="{loc:Loc import-sources}" Classes="NanoHeadingSmall" Margin="0 4"
+                     IsVisible="{Binding !NothingFound}" />
+
+          <ListBox ItemsSource="{Binding Sources}" SelectedItem="{Binding SelectedSource, Mode=TwoWay}"
+                   IsVisible="{Binding !NothingFound}" MaxHeight="150">
+            <ListBox.ItemTemplate>
+              <DataTemplate>
+                <StackPanel Orientation="Vertical" Margin="0 2">
+                  <TextBlock Text="{Binding Title}" />
+                  <TextBlock Text="{Binding Description}" TextWrapping="Wrap"
+                             Foreground="{DynamicResource ThemeSubTextBrush}" />
+                </StackPanel>
+              </DataTemplate>
+            </ListBox.ItemTemplate>
+          </ListBox>
+
+          <!-- What to import -->
+          <TextBlock Text="{loc:Loc import-what}" Classes="NanoHeadingSmall" Margin="0 12 0 4"
+                     IsVisible="{Binding !NothingFound}" />
+
+          <StackPanel Orientation="Vertical" IsVisible="{Binding !NothingFound}">
+            <CheckBox Content="{loc:Loc import-favorites}" IsChecked="{Binding ImportFavorites}" />
+            <CheckBox Content="{loc:Loc import-hubs}" IsChecked="{Binding ImportHubs}" />
+            <CheckBox Content="{loc:Loc import-stats}" IsChecked="{Binding ImportStats}" />
+            <CheckBox Content="{loc:Loc import-content}" IsChecked="{Binding ImportContent}" />
+          </StackPanel>
+        </StackPanel>
+      </ScrollViewer>
+    </DockPanel>
+  </v:ScaledControl>
+</Window>

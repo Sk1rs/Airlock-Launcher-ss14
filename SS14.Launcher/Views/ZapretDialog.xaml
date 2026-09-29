@@ -1,0 +1,85 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:SS14.Launcher.ViewModels"
+        xmlns:loc="clr-namespace:SS14.Launcher.Localization"
+        xmlns:v="clr-namespace:SS14.Launcher.Views"
+        mc:Ignorable="d" d:DesignWidth="620" d:DesignHeight="520"
+        Width="640" Height="560"
+        CanResize="False"
+        x:Class="SS14.Launcher.Views.ZapretDialog"
+        x:DataType="vm:ZapretViewModel"
+        Icon="{DynamicResource WindowIcon}"
+        Title="{loc:Loc zapret-title}"
+        Padding="4"
+        WindowStartupLocation="CenterOwner">
+  <Design.DataContext>
+    <vm:ZapretViewModel />
+  </Design.DataContext>
+  <Window.DataContext>
+    <vm:ZapretViewModel />
+  </Window.DataContext>
+
+  <v:ScaledControl>
+    <DockPanel Margin="8">
+      <!-- Actions -->
+      <DockPanel DockPanel.Dock="Bottom" Height="30" Margin="0 8 0 0" LastChildFill="False">
+        <Button DockPanel.Dock="Right" Classes="OpenLeft" Click="CloseDialog"
+                Content="{loc:Loc zapret-close}" />
+        <Button DockPanel.Dock="Right" Classes="OpenBoth" Command="{Binding OpenProject}"
+                Content="{loc:Loc zapret-project}" />
+        <Button DockPanel.Dock="Right" Classes="OpenRight" Command="{Binding OpenFolder}"
+                IsVisible="{Binding Installed}"
+                Content="{loc:Loc zapret-open-folder}" />
+      </DockPanel>
+
+      <TextBlock DockPanel.Dock="Bottom" Margin="0 8 0 0" TextWrapping="Wrap"
+                 Foreground="{DynamicResource ThemeSubTextBrush}"
+                 Text="{Binding StatusText}" />
+
+      <StackPanel Orientation="Vertical" Spacing="8">
+        <TextBlock Text="{loc:Loc zapret-heading}" Classes="NanoHeadingMedium" />
+        <TextBlock Text="{loc:Loc zapret-intro}" TextWrapping="Wrap" />
+        <TextBlock Text="{loc:Loc zapret-warning}" TextWrapping="Wrap"
+                   Foreground="{DynamicResource ThemeNanoGoldBrush}" />
+
+        <!-- Not installed yet -->
+        <StackPanel Orientation="Vertical" Spacing="6" IsVisible="{Binding NotInstalled}">
+          <StackPanel Orientation="Horizontal" Spacing="6">
+            <Button Content="{loc:Loc zapret-install}" IsEnabled="{Binding !Busy}" Click="InstallPressed" />
+            <Button Content="{loc:Loc zapret-install-file}" ToolTip.Tip="{loc:Loc zapret-install-file-desc}"
+                    IsEnabled="{Binding !Busy}" Click="InstallFromFilePressed" />
+          </StackPanel>
+          <TextBlock Text="{loc:Loc zapret-install-desc}" TextWrapping="Wrap"
+                     Foreground="{DynamicResource ThemeSubTextBrush}" />
+        </StackPanel>
+
+        <!-- Installed -->
+        <StackPanel Orientation="Vertical" Spacing="6" IsVisible="{Binding Installed}">
+          <StackPanel Orientation="Horizontal" Spacing="6">
+            <TextBlock Text="{loc:Loc zapret-strategy}" VerticalAlignment="Center" />
+            <ComboBox MinWidth="260" ItemsSource="{Binding Strategies}"
+                      SelectedItem="{Binding SelectedStrategy, Mode=TwoWay}" />
+          </StackPanel>
+          <TextBlock Text="{loc:Loc zapret-strategy-desc}" TextWrapping="Wrap"
+                     Foreground="{DynamicResource ThemeSubTextBrush}" />
+
+          <StackPanel Orientation="Horizontal" Spacing="6">
+            <Button Content="{loc:Loc zapret-start}" Command="{Binding StartPressed}"
+                    IsEnabled="{Binding !Running}" />
+            <Button Content="{loc:Loc zapret-stop}" Command="{Binding StopPressed}"
+                    IsEnabled="{Binding Running}" />
+            <Button Content="{loc:Loc zapret-refresh}" Command="{Binding Refresh}" />
+            <Button Content="{loc:Loc zapret-remove}" ToolTip.Tip="{loc:Loc zapret-remove-desc}"
+                    Command="{Binding UninstallPressed}" />
+          </StackPanel>
+
+          <CheckBox Content="{loc:Loc zapret-autostart}" IsChecked="{Binding AutoStart}" />
+          <TextBlock Text="{loc:Loc zapret-hosts-note}" TextWrapping="Wrap"
+                     Foreground="{DynamicResource ThemeSubTextBrush}" />
+        </StackPanel>
+      </StackPanel>
+    </DockPanel>
+  </v:ScaledControl>
+</Window>
